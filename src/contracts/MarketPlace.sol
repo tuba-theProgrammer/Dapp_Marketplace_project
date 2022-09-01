@@ -49,6 +49,31 @@ contract MarketPlace{
     }
 
 
-    
+    // allow user to purchase products
+     function purchaseProduct(uint _id)public {
+        // Fetch the Product
+         Product memory  _product= products[_id];
+ 
+        // Fetch the owner
+
+        address _seller = _product.owner;
+        // make sure the product is valid
+        
+        // trnsfer ownership to the buyer
+    _product.owner= msg.sender;
+        // purchase it
+
+        _product.purchase=true;
+        // update their products in mapping
+        
+        products[_id] = _product;
+       
+        // Pay the seller - by sending them ether
+        
+
+        // Trigger an event
+
+
+     }
 
 }

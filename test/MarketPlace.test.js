@@ -59,6 +59,10 @@ contract('MarketPlace',([deployer,seller,buyer])=>{
 
 })
 
+it('sells products',async()=>{
+  
+})
+
     })
 
 
