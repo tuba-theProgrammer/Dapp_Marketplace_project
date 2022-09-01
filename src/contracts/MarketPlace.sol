@@ -13,7 +13,7 @@ contract MarketPlace{
         uint id;
         string name;
         uint price;
-        address owner;
+        address payable owner;
         bool purchased;
      } 
 
@@ -26,7 +26,16 @@ contract MarketPlace{
         uint id,
         string name,
         uint price,
-        address owner,
+        address payable owner,
+        bool purchased
+    );
+
+
+     event ProductPurchased(
+        uint id,
+        string name,
+        uint price,
+        address payable owner,
         bool purchased
     );
 
@@ -50,30 +59,45 @@ contract MarketPlace{
 
 
     // allow user to purchase products
-     function purchaseProduct(uint _id)public {
+     function purchaseProduct(uint _id)public payable{
+
         // Fetch the Product
          Product memory  _product= products[_id];
  
         // Fetch the owner
 
-        address _seller = _product.owner;
-        // make sure the product is valid
-        
+        address payable _seller = _product.owner;
+       
+  // make sure the product has valid id
+    require(_product.id>0&&_product.id<=productCount,'invalid id');
+    // Require that there is enough ether in the transanction
+    require(msg.value>=_product.price);
+
+    // require that product has not purchased yet
+    require(!_product.purchased);
+
+    //Require that buyer is not the seller
+
+    require(_seller!=msg.sender);
+
+ 
+
+
         // trnsfer ownership to the buyer
     _product.owner= msg.sender;
         // purchase it
 
-        _product.purchase=true;
+        _product.purchased=true;
         // update their products in mapping
         
         products[_id] = _product;
        
         // Pay the seller - by sending them ether
-        
+        address(_seller).transfer(msg.value);
 
         // Trigger an event
 
-
+       emit ProductPurchased(productCount,_product.name,_product.price,msg.sender,true);
      }
 
 }
