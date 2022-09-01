@@ -22,14 +22,30 @@ contract MarketPlace{
     }
     
 
+    event ProductCreated(
+        uint id,
+        string name,
+        uint price,
+        address owner,
+        bool purchased
+    );
+
+
     function createProduct(string memory _name,uint _price) public {
- // create product
- // trigger event - tell blockchain that something has happend
+ 
  // make sure parameters are correct 
+     require(bytes(_name).length>0,'name must be provided');
+     require(_price>0,'price must be provided');
+
+
     // Increment product count
        productCount++;
+       // create product
        products[productCount]= Product(productCount,_name,_price,msg.sender,false);
-
+         // we can check the log by triggering events
+          // trigger event - tell blockchain that something has happend
+    
+       emit ProductCreated(productCount,_name,_price,msg.sender,false);
     }
 
 
