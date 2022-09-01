@@ -49,6 +49,16 @@ contract('MarketPlace',([deployer,seller,buyer])=>{
 
     })
 
+    it('Lists of products',async()=>{
+     const product = await marketplace.products(productCount);
+     assert.equal(product.id.toNumber(),productCount.toNumber(),'id is correct');
+     assert.equal(product.name,'Redmi note 9s',' is correct');
+     assert.equal(product.price,'1000000000000000000','price is correct');
+     assert.equal(product.owner,seller,' is correct');
+     assert.equal(product.purchased,false,' is correct');
+
+})
+
     })
 
 
