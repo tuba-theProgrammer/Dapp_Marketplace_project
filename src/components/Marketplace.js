@@ -1,11 +1,11 @@
 import React, {useEffect, useState } from 'react';
 import getWeb3 from '../Utils/getWeb3';
 import MarketPlace from '../abis/MarketPlace.json'
-import SearchAppBar from './navbar';
+import NavbarComponent from './navbar';
 
 function MarketPlaceComponent(props){
    
-    const [getAccount,setAccount] = useState('');
+    const [getAccount,setAccount] = useState('hello');
     const [getProductCount,setProductCount] = useState(0);
     const [getProducts,setProducts]= useState([])
     const [getLoading,setLoading]= useState(true)
@@ -13,8 +13,10 @@ function MarketPlaceComponent(props){
     useEffect(()=>{
 
            loadBlockChainData();
+         
     },[])
-
+   
+ 
 
   
 
@@ -24,8 +26,10 @@ function MarketPlaceComponent(props){
         // Use web3 to get the user's accounts.
         const accounts = await web3.eth.getAccounts();
         console.log("here is accounts ",accounts)
-        setAccount(accounts[0])
 
+        // new logic pata chali - wah
+         await setAccount(accounts[0])
+      
         // to get the network id dynamically
         const networkId= await web3.eth.net.getId();
         console.log(networkId)
@@ -46,7 +50,7 @@ function MarketPlaceComponent(props){
     }
 
      return(<>
-      
+      <NavbarComponent account={getAccount}/>
      </>)
 }
 export default MarketPlaceComponent;
