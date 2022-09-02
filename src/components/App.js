@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import logo from '../logo.png';
-import './App.css';
-
+import MarketPlaceComponent from './Marketplace';
 class App extends Component {
   render() {
     return (
       <>
+      <MarketPlaceComponent/>
       </>
     );
   }
