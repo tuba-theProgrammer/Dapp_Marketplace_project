@@ -70,13 +70,20 @@ function MarketPlaceComponent(props){
     }
 
    
-   function callMe(){
-    console.log(getProducts)
-   }
-
+ 
     function CreateProduct(name,price){
         setLoading(true)
         getMarketPlace.methods.createProduct(name,price).send({from:getAccount})
+        .once('receipt',(receipt)=>{
+            setLoading(false)
+
+        })
+    }
+
+
+    function purchaseProduct(id,price){
+        setLoading(true)
+        getMarketPlace.methods.purchaseProduct(id).send({from:getAccount,value: price})
         .once('receipt',(receipt)=>{
             setLoading(false)
 
@@ -88,14 +95,11 @@ function MarketPlaceComponent(props){
       <NavbarComponent account={getAccount}/>
       <div className="border d-flex align-items-center justify-content-center mt-5">
         <div className='row'>
-            {getLoading?<div id='loader' className='text-center'><p className='text-center'>Loading...</p></div>:   <Main createProductCall={CreateProduct} productList={getProducts}/>}
+            {getLoading?<div id='loader' className='text-center'><p className='text-center'>Loading...</p></div>:   <Main createProductCall={CreateProduct} productList={getProducts} purchaseProductCall={purchaseProduct}/>}
       
         </div>
          
-      <Button variant="primary" onClick={callMe}>
-        list of Products
-      </Button>
-
+    
       </div>
      </>)
 }
