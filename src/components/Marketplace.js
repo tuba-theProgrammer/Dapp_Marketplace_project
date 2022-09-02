@@ -1,6 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import getWeb3 from '../Utils/getWeb3';
 import MarketPlace from '../abis/MarketPlace.json'
+import SearchAppBar from './navbar';
 
 function MarketPlaceComponent(props){
    
@@ -45,7 +46,7 @@ function MarketPlaceComponent(props){
     }
 
      return(<>
-    
+      
      </>)
 }
 export default MarketPlaceComponent;
