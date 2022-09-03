@@ -1,4 +1,6 @@
-pragma solidity ^0.5.0;
+
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.7.0 <0.9.0;
 
 contract MarketPlace{
     string public name;
@@ -17,7 +19,7 @@ contract MarketPlace{
         bool purchased;
      } 
 
-    constructor() public {
+    constructor(){
     name="DApp university market Place";
     }
     
@@ -50,11 +52,11 @@ contract MarketPlace{
     // Increment product count
        productCount++;
        // create product
-       products[productCount]= Product(productCount,_name,_price,msg.sender,false);
+       products[productCount]= Product(productCount,_name,_price,payable(msg.sender),false);
          // we can check the log by triggering events
           // trigger event - tell blockchain that something has happend
     
-       emit ProductCreated(productCount,_name,_price,msg.sender,false);
+       emit ProductCreated(productCount,_name,_price,payable(msg.sender),false);
     }
 
 
@@ -84,7 +86,7 @@ contract MarketPlace{
 
 
         // trnsfer ownership to the buyer
-    _product.owner= msg.sender;
+    _product.owner= payable(msg.sender);
         // purchase it
 
         _product.purchased=true;
@@ -93,11 +95,11 @@ contract MarketPlace{
         products[_id] = _product;
        
         // Pay the seller - by sending them ether
-        address(_seller).transfer(msg.value);
+        payable(address(_seller)).transfer(msg.value);
 
         // Trigger an event
 
-       emit ProductPurchased(productCount,_product.name,_product.price,msg.sender,true);
+       emit ProductPurchased(productCount,_product.name,_product.price,payable(msg.sender),true);
      }
 
 }
